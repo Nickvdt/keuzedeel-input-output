@@ -29,12 +29,14 @@ while True:
         # Als de contour groter is dan een bepaalde drempelwaarde, wordt beweging gedetecteerd
         if cv2.contourArea(c) > 1000:
             print("Beweging gedetecteerd!")
-            engine.say("prepare to take a photo")
+            time.sleep(7)
+            engine.say("prepare to")
+            engine.say("take a photo")
             time.sleep(5)
             now = datetime.datetime.now()
             timer = 0
-            while timer < 10:
-                engine.say(f"{10 - timer}")
+            while timer < 5:
+                engine.say(f"{5 - timer}")
                 engine.runAndWait()
                 # Wacht 1 seconde
                 time.sleep(1)
@@ -42,16 +44,11 @@ while True:
                 timer += 1
                 # Geef de timer hardop weer
                 print(f"Timer: {timer} sec")
-            # Maak een bestandnaam met  datum en tijd
-            engine.say("Say Cheese!")
+            engine.say("the photo is taken")
+            engine.runAndWait()
             _, frame = webcam.read()
+             # Maak een bestandnaam met  datum en tijd
             filename = f"{now:%Y%m%d-%H%M%S}.jpg"
             cv2.imwrite(filename, frame)
-            # Sluit de webcam
-            webcam.release()
             cv2.imshow("Foto", frame)
             cv2.waitKey()
-
-
-    # Zet het tweede frame klaar als het volgende eerste frame
-    frame1 = frame2
